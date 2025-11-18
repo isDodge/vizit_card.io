@@ -939,6 +939,8 @@
             padding: 1.5rem;
             margin-top: 1rem;
             text-align: left;
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
         .crypto-address {
@@ -949,6 +951,7 @@
             word-break: break-all;
             font-family: monospace;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
         }
 
         .warning-text {
@@ -1057,6 +1060,41 @@
             .step:nth-child(2) { animation-delay: 0.4s; }
             .step:nth-child(3) { animation-delay: 0.6s; }
             .step:nth-child(4) { animation-delay: 0.8s; }
+            
+            /* Уменьшение расстояния между блоками на мобильных */
+            .container {
+                padding: 3rem 0;
+            }
+            
+            .section-header {
+                margin-bottom: 2.5rem;
+            }
+            
+            .how-it-works {
+                padding: 3rem 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .tariffs {
+                margin: 2rem auto;
+            }
+            
+            .review-link {
+                margin-bottom: 2.5rem;
+            }
+            
+            .footer {
+                margin-top: 2rem;
+                padding: 2rem 0;
+            }
+            
+            .stats {
+                margin-top: 2.5rem;
+            }
+            
+            .about {
+                margin-bottom: 15px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1132,6 +1170,93 @@
                 border-left: 12px solid var(--primary);
                 border-top: 8px solid transparent;
                 border-bottom: 8px solid transparent;
+            }
+            
+            /* Еще больше уменьшение расстояний на очень маленьких экранах */
+            .container {
+                padding: 2rem 0;
+            }
+            
+            .section-header {
+                margin-bottom: 2rem;
+            }
+            
+            .how-it-works {
+                padding: 2rem 1rem;
+                margin: 1.5rem 0;
+            }
+            
+            .steps {
+                margin-top: 2.5rem;
+                gap: 2rem;
+            }
+            
+            .step {
+                padding: 0 0.5rem;
+            }
+            
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .step-title {
+                font-size: 1.1rem;
+            }
+            
+            .step-description {
+                font-size: 0.85rem;
+            }
+            
+            .tariff-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .tariff-features li {
+                font-size: 0.9rem;
+            }
+            
+            .feature-item {
+                padding: 0.8rem;
+            }
+            
+            .feature-icon {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .modal {
+                padding: 1.5rem 1rem;
+            }
+            
+            .modal-title {
+                font-size: 1.3rem;
+            }
+            
+            .modal-text {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .payment-btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .crypto-info {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .crypto-address {
+                padding: 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .warning-text {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -1400,7 +1525,10 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Добавляем небольшую задержку для плавности
+                    // Уменьшена задержка для мобильных устройств
+                    const isMobile = window.innerWidth <= 768;
+                    const delay = isMobile ? 50 : 100;
+                    
                     setTimeout(() => {
                         entry.target.classList.add('visible');
                         
@@ -1416,7 +1544,7 @@
                                 });
                             }
                         }
-                    }, 100);
+                    }, delay);
                 }
             });
         }, observerOptions);
@@ -1460,33 +1588,43 @@
             const video = document.getElementById('aboutVideo');
             
             if (playButton && video) {
-                playButton.addEventListener('click', function() {
-                    if (video.paused) {
-                        video.play();
-                        playButton.style.display = 'none';
-                    } else {
-                        video.pause();
-                        playButton.style.display = 'flex';
-                    }
-                });
-                
-                video.addEventListener('click', function() {
-                    if (video.paused) {
-                        video.play();
-                        playButton.style.display = 'none';
-                    } else {
-                        video.pause();
-                        playButton.style.display = 'flex';
-                    }
-                });
-                
-                video.addEventListener('play', function() {
+                // Скрываем стандартные элементы управления на мобильных устройствах
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    video.setAttribute('controls', 'true');
                     playButton.style.display = 'none';
-                });
-                
-                video.addEventListener('pause', function() {
+                } else {
+                    video.removeAttribute('controls');
                     playButton.style.display = 'flex';
-                });
+                    
+                    playButton.addEventListener('click', function() {
+                        if (video.paused) {
+                            video.play();
+                            playButton.style.display = 'none';
+                        } else {
+                            video.pause();
+                            playButton.style.display = 'flex';
+                        }
+                    });
+                    
+                    video.addEventListener('click', function() {
+                        if (video.paused) {
+                            video.play();
+                            playButton.style.display = 'none';
+                        } else {
+                            video.pause();
+                            playButton.style.display = 'flex';
+                        }
+                    });
+                    
+                    video.addEventListener('play', function() {
+                        playButton.style.display = 'none';
+                    });
+                    
+                    video.addEventListener('pause', function() {
+                        playButton.style.display = 'flex';
+                    });
+                }
             }
         });
 
