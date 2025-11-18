@@ -31,11 +31,11 @@
             overflow-x: hidden;
         }
 
-        /* Анимации */
+        /* Ускоренные анимации для мобильных */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -48,7 +48,7 @@
                 transform: translateY(0px);
             }
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-5px);
             }
         }
 
@@ -66,7 +66,7 @@
         @keyframes slideInFromLeft {
             from {
                 opacity: 0;
-                transform: translateX(-50px);
+                transform: translateX(-30px);
             }
             to {
                 opacity: 1;
@@ -84,20 +84,20 @@
         }
 
         .animate-fade-in {
-            animation: fadeInUp 0.8s ease-out forwards;
+            animation: fadeInUp 0.5s ease-out forwards;
             opacity: 0;
         }
 
         .animate-float {
-            animation: float 6s ease-in-out infinite;
+            animation: float 4s ease-in-out infinite;
         }
 
         .animate-pulse-slow {
-            animation: pulse 3s ease-in-out infinite;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         .animate-slide-left {
-            animation: slideInFromLeft 0.8s ease-out forwards;
+            animation: slideInFromLeft 0.5s ease-out forwards;
             opacity: 0;
         }
 
@@ -284,22 +284,6 @@
             box-shadow: 0 20px 40px rgba(255, 0, 0, 0.4);
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: float 2s ease-in-out infinite;
-            z-index: 2;
-        }
-
-        .scroll-indicator::after {
-            content: '↓';
-            color: var(--light);
-            font-size: 1.5rem;
-            opacity: 0.7;
-        }
-
         .container {
             width: 90%;
             max-width: 1200px;
@@ -310,8 +294,8 @@
         /* Секции с правильной анимацией */
         .section-wrapper {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .section-wrapper.visible {
@@ -1047,6 +1031,108 @@
             .modal {
                 padding: 2rem 1.5rem;
             }
+            
+            /* Ускорение анимаций на мобильных */
+            .animate-fade-in {
+                animation-duration: 0.4s;
+            }
+            
+            .animate-float {
+                animation-duration: 3s;
+            }
+            
+            .animate-slide-left {
+                animation-duration: 0.4s;
+            }
+            
+            .steps.animated::before {
+                animation-duration: 1s;
+            }
+            
+            .step.animated {
+                animation-duration: 0.5s;
+            }
+            
+            .step:nth-child(1) { animation-delay: 0.2s; }
+            .step:nth-child(2) { animation-delay: 0.4s; }
+            .step:nth-child(3) { animation-delay: 0.6s; }
+            .step:nth-child(4) { animation-delay: 0.8s; }
+        }
+
+        @media (max-width: 480px) {
+            .club-title {
+                font-size: 2.5rem;
+            }
+            
+            .club-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            .stats {
+                gap: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .cta-button {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .support h2 {
+                font-size: 1.5rem;
+            }
+            
+            .support p {
+                font-size: 0.9rem;
+            }
+            
+            .support .btn {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .tariff-price {
+                font-size: 2.5rem;
+            }
+            
+            .tariff-duration {
+                font-size: 1.2rem;
+            }
+            
+            .review-photo {
+                height: 300px;
+            }
+            
+            .video-wrapper video {
+                height: 250px;
+            }
+            
+            .play-button {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .play-button::after {
+                border-left: 12px solid var(--primary);
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+            }
         }
     </style>
 </head>
@@ -1085,7 +1171,6 @@
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator"></div>
     </header>
 
     <!-- Секция 1: О клубе -->
@@ -1097,8 +1182,8 @@
             </div>
             <div class="about">
                 <div class="video-wrapper">
-                    <div class="play-button"></div>
-                    <video controls poster="videos/poster.png">
+                    <div class="play-button" id="customPlayButton"></div>
+                    <video controls poster="videos/poster.png" id="aboutVideo">
                         <source src="videos/about-club.mp4" type="video/mp4">
                         Ваш браузер не поддерживает видео тег.
                     </video>
@@ -1371,8 +1456,8 @@
             });
             
             // Обработка клика по кнопке воспроизведения видео
-            const playButton = document.querySelector('.play-button');
-            const video = document.querySelector('video');
+            const playButton = document.getElementById('customPlayButton');
+            const video = document.getElementById('aboutVideo');
             
             if (playButton && video) {
                 playButton.addEventListener('click', function() {
@@ -1393,6 +1478,14 @@
                         video.pause();
                         playButton.style.display = 'flex';
                     }
+                });
+                
+                video.addEventListener('play', function() {
+                    playButton.style.display = 'none';
+                });
+                
+                video.addEventListener('pause', function() {
+                    playButton.style.display = 'flex';
                 });
             }
         });
