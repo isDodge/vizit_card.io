@@ -1,0 +1,451 @@
+/* Веточки сакуры - высококонтрастные и видимые */
+.sakura-branch {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.9;
+    filter: 
+        drop-shadow(0 6px 12px rgba(232, 180, 184, 0.7))
+        drop-shadow(0 12px 24px rgba(166, 124, 124, 0.5))
+        drop-shadow(0 0 30px rgba(232, 180, 184, 0.3))
+        brightness(1.35)
+        contrast(1.25)
+        saturate(1.2);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    mix-blend-mode: multiply;
+    animation: floatBranches 25s infinite ease-in-out;
+}
+
+.sakura-branch:hover {
+    opacity: 1;
+    filter: 
+        drop-shadow(0 10px 20px rgba(232, 180, 184, 0.9))
+        drop-shadow(0 20px 40px rgba(166, 124, 124, 0.7))
+        drop-shadow(0 0 50px rgba(232, 180, 184, 0.5))
+        brightness(1.5)
+        contrast(1.4)
+        saturate(1.3);
+    transform: scale(1.05) rotate(2deg);
+}
+
+.sakura-branch img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: 
+        drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))
+        drop-shadow(0 8px 16px rgba(232, 180, 184, 0.6))
+        drop-shadow(0 0 20px rgba(232, 180, 184, 0.3))
+        brightness(1.25)
+        contrast(1.35);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+}
+
+.sakura-branch:hover img {
+    filter: 
+        drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 12px 24px rgba(232, 180, 184, 0.8))
+        drop-shadow(0 0 30px rgba(232, 180, 184, 0.4))
+        brightness(1.35)
+        contrast(1.45);
+    transform: scale(1.1);
+}
+
+/* Размеры веточек */
+.sakura-branch-large {
+    width: 320px;
+    height: 320px;
+}
+
+.sakura-branch-medium {
+    width: 240px;
+    height: 240px;
+}
+
+.sakura-branch-small {
+    width: 180px;
+    height: 180px;
+}
+
+.sakura-branch-tiny {
+    width: 120px;
+    height: 120px;
+}
+
+/* Позиционирование */
+.sakura-top-left {
+    top: -60px;
+    left: -60px;
+    transform: rotate(45deg);
+    --rotation: 45deg;
+}
+
+.sakura-top-right {
+    top: -60px;
+    right: -60px;
+    transform: rotate(-45deg);
+    --rotation: -45deg;
+}
+
+.sakura-bottom-left {
+    bottom: -60px;
+    left: -60px;
+    transform: rotate(-45deg);
+    --rotation: -45deg;
+}
+
+.sakura-bottom-right {
+    bottom: -60px;
+    right: -60px;
+    transform: rotate(45deg);
+    --rotation: 45deg;
+}
+
+.sakura-left-center {
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    --rotation: 90deg;
+}
+
+.sakura-right-center {
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    --rotation: -90deg;
+}
+
+/* Анимация плавания веточек */
+@keyframes floatBranches {
+    0%, 100% { 
+        transform: translateY(0) rotate(var(--rotation, 0deg)) scale(1); 
+    }
+    20% { 
+        transform: translateY(-15px) rotate(calc(var(--rotation, 0deg) + 3deg)) scale(1.02); 
+    }
+    40% { 
+        transform: translateY(-5px) rotate(calc(var(--rotation, 0deg) - 2deg)) scale(0.98); 
+    }
+    60% { 
+        transform: translateY(-12px) rotate(calc(var(--rotation, 0deg) + 2deg)) scale(1.01); 
+    }
+    80% { 
+        transform: translateY(-8px) rotate(calc(var(--rotation, 0deg) - 1deg)) scale(0.99); 
+    }
+}
+
+/* Улучшенная анимация для большей видимости */
+@keyframes glowPulse {
+    0%, 100% {
+        filter: 
+            drop-shadow(0 6px 12px rgba(232, 180, 184, 0.7))
+            drop-shadow(0 12px 24px rgba(166, 124, 124, 0.5))
+            brightness(1.35)
+            contrast(1.25);
+    }
+    50% {
+        filter: 
+            drop-shadow(0 8px 16px rgba(232, 180, 184, 0.9))
+            drop-shadow(0 16px 32px rgba(166, 124, 124, 0.7))
+            drop-shadow(0 0 40px rgba(232, 180, 184, 0.4))
+            brightness(1.45)
+            contrast(1.35);
+    }
+}
+
+.sakura-branch {
+    animation: 
+        floatBranches 25s infinite ease-in-out,
+        glowPulse 8s infinite ease-in-out;
+}
+
+/* Декоративные уголки */
+.decorative-corner {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.7;
+}
+
+.decorative-corner::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(45deg, 
+            transparent 35%, 
+            var(--primary) 35%, 
+            var(--primary) 40%, 
+            var(--accent) 40%, 
+            var(--accent) 45%, 
+            transparent 45%),
+        linear-gradient(-45deg, 
+            transparent 35%, 
+            var(--primary) 35%, 
+            var(--primary) 40%, 
+            var(--accent) 40%, 
+            var(--accent) 45%, 
+            transparent 45%);
+    animation: cornerPulse 5s infinite ease-in-out;
+    filter: drop-shadow(0 0 15px rgba(232, 180, 184, 0.4));
+}
+
+@keyframes cornerPulse {
+    0%, 100% { 
+        opacity: 0.5;
+        filter: drop-shadow(0 0 10px rgba(232, 180, 184, 0.3));
+    }
+    50% { 
+        opacity: 0.9;
+        filter: drop-shadow(0 0 25px rgba(232, 180, 184, 0.6));
+    }
+}
+
+/* Фоновые веточки для секций */
+.section-with-branches {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-with-branches::before,
+.section-with-branches::after {
+    content: '';
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background: url('../img/sakura-branch.png') no-repeat center/contain;
+    opacity: 0.45;
+    filter: 
+        drop-shadow(0 10px 20px rgba(232, 180, 184, 0.5))
+        drop-shadow(0 0 30px rgba(232, 180, 184, 0.3))
+        brightness(1.35)
+        contrast(1.3);
+    pointer-events: none;
+    z-index: 0;
+    animation: sectionBranchesFloat 30s infinite ease-in-out;
+}
+
+.section-with-branches::before {
+    top: -120px;
+    left: -120px;
+    transform: rotate(45deg);
+    animation-delay: 0s;
+}
+
+.section-with-branches::after {
+    bottom: -120px;
+    right: -120px;
+    transform: rotate(-135deg);
+    animation-delay: 10s;
+}
+
+@keyframes sectionBranchesFloat {
+    0%, 100% { 
+        transform: rotate(var(--rotation, 45deg)) translate(0, 0) scale(1);
+        opacity: 0.45;
+    }
+    25% { 
+        transform: rotate(calc(var(--rotation, 45deg) + 2deg)) translate(-10px, -10px) scale(1.02);
+        opacity: 0.5;
+    }
+    50% { 
+        transform: rotate(calc(var(--rotation, 45deg) - 1deg)) translate(5px, 5px) scale(0.98);
+        opacity: 0.4;
+    }
+    75% { 
+        transform: rotate(calc(var(--rotation, 45deg) + 1deg)) translate(-5px, 5px) scale(1.01);
+        opacity: 0.48;
+    }
+}
+
+/* Эффект при скролле */
+.sakura-branch.scroll-visible {
+    opacity: 0.95;
+    filter: 
+        drop-shadow(0 10px 20px rgba(232, 180, 184, 0.8))
+        drop-shadow(0 20px 40px rgba(166, 124, 124, 0.6))
+        brightness(1.4)
+        contrast(1.35);
+}
+
+/* Параллакс эффект */
+.sakura-branch.parallax {
+    transition: transform 0.3s ease-out;
+}
+
+/* Случайные веточки в контенте */
+.content-branch {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    opacity: 0.3;
+    filter: 
+        drop-shadow(0 4px 8px rgba(232, 180, 184, 0.4))
+        brightness(1.2)
+        contrast(1.1);
+    pointer-events: none;
+    z-index: 0;
+    animation: contentBranchFloat 20s infinite ease-in-out;
+}
+
+@keyframes contentBranchFloat {
+    0%, 100% { 
+        transform: rotate(0deg) translate(0, 0);
+        opacity: 0.3;
+    }
+    25% { 
+        transform: rotate(5deg) translate(-5px, -5px);
+        opacity: 0.35;
+    }
+    50% { 
+        transform: rotate(-3deg) translate(3px, 3px);
+        opacity: 0.25;
+    }
+    75% { 
+        transform: rotate(2deg) translate(-2px, 2px);
+        opacity: 0.32;
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .sakura-branch-large {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .sakura-branch-medium {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .section-with-branches::before,
+    .section-with-branches::after {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .decorative-corner {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 992px) {
+    .sakura-branch {
+        opacity: 0.8;
+    }
+    
+    .sakura-branch-large {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .sakura-branch-medium {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .section-with-branches::before,
+    .section-with-branches::after {
+        width: 280px;
+        height: 280px;
+        opacity: 0.35;
+    }
+}
+
+@media (max-width: 768px) {
+    .sakura-branch {
+        opacity: 0.7;
+        filter: 
+            drop-shadow(0 4px 8px rgba(232, 180, 184, 0.6))
+            drop-shadow(0 8px 16px rgba(166, 124, 124, 0.4))
+            brightness(1.3)
+            contrast(1.2);
+    }
+    
+    .sakura-branch-large,
+    .sakura-branch-medium {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .sakura-top-left {
+        top: -40px;
+        left: -40px;
+    }
+    
+    .sakura-top-right {
+        top: -40px;
+        right: -40px;
+    }
+    
+    .sakura-left-center,
+    .sakura-right-center {
+        display: none;
+    }
+    
+    .section-with-branches::before,
+    .section-with-branches::after {
+        width: 200px;
+        height: 200px;
+        opacity: 0.25;
+    }
+    
+    .decorative-corner {
+        width: 80px;
+        height: 80px;
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 576px) {
+    .sakura-branch {
+        display: none;
+    }
+    
+    .section-with-branches::before,
+    .section-with-branches::after {
+        display: none;
+    }
+    
+    .decorative-corner {
+        display: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    .sakura-branch,
+    .section-with-branches::before,
+    .section-with-branches::after,
+    .decorative-corner {
+        display: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .sakura-branch {
+        opacity: 1;
+        filter: 
+            drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))
+            brightness(1.5)
+            contrast(1.8);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .sakura-branch,
+    .section-with-branches::before,
+    .section-with-branches::after,
+    .decorative-corner::before {
+        animation: none;
+        transition: none;
+    }
+}
